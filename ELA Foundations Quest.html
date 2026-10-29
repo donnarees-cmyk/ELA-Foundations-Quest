@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ELA Foundations Quest • Grade 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1d2b64;--ink:#22304f;--purple:#7b3fe4;--coral:#ff6b4a;--teal:#0fa3a3;--gold:#f5b301;--green:#1fb36b;--red:#e5484d;
+  --bg:#fff8ec;--card:#ffffff;--line:#e6dccb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);background-image:radial-gradient(#f3e3c6 1.2px,transparent 1.2px);background-size:22px 22px;color:var(--ink);font:18px/1.6 Nunito,system-ui,sans-serif}
+h1,h2,h3,h4,.fred{font-family:Fredoka,Nunito,sans-serif;line-height:1.2}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+/* Header */
+header{background:linear-gradient(120deg,#1d2b64 0%,#5a2fc2 45%,#ff6b4a 100%);color:#fff;padding:22px 16px 26px}
+.hwrap{max-width:1040px;margin:0 auto;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.logo{height:96px;width:auto;background:#fff;border-radius:16px;padding:6px;box-shadow:0 6px 18px #0003}
+.logo-fallback{display:none;background:#fff;color:var(--navy);border-radius:16px;padding:10px 14px;font-family:Fredoka;font-weight:700;text-align:center;line-height:1.1;box-shadow:0 6px 18px #0003}
+.logo-fallback small{display:block;font-family:Nunito;font-weight:600;font-size:11px;color:#7b3fe4}
+.kicker{margin:0;font-weight:800;letter-spacing:.08em;font-size:13px;opacity:.9}
+header h1{margin:4px 0;font-size:clamp(28px,5.5vw,44px)}
+header p.tag{margin:0;font-size:17px;opacity:.95}
+
+/* HUD */
+.hud{position:sticky;top:0;z-index:20;background:#ffffffee;backdrop-filter:blur(6px);border-bottom:3px solid var(--line)}
+.hudin{max-width:1040px;margin:0 auto;padding:8px 16px;display:flex;gap:10px 16px;align-items:center;flex-wrap:wrap}
+.lvl{font-family:Fredoka;font-weight:700;color:var(--purple);white-space:nowrap}
+.xpbar{flex:1 1 160px;min-width:140px;height:16px;background:#efe6ff;border-radius:99px;overflow:hidden;position:relative}
+.xpbar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#7b3fe4,#ff6b4a,#f5b301);transition:width .5s}
+.xpnum{font-weight:800;white-space:nowrap}
+.keys{display:flex;gap:4px;font-size:22px}
+.keys span{filter:grayscale(1);opacity:.3;transition:.3s}
+.keys span.on{filter:none;opacity:1;transform:scale(1.1)}
+.tools{display:flex;gap:6px;align-items:center}
+.tbtn{background:#f1ecff;color:var(--navy);border:0;border-radius:10px;padding:6px 10px;font-size:15px;font-weight:800}
+.tbtn.stop{background:#ffe3dd}
+.rate{width:70px;accent-color:var(--purple)}
+
+main{max-width:1040px;margin:0 auto;padding:18px 16px 60px}
+
+/* Name + map */
+.start{background:var(--card);border-radius:20px;padding:16px 18px;border:3px solid var(--line);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.start label{font-weight:800}
+.start input{flex:1 1 220px;font:inherit;padding:10px 12px;border:3px solid #d9cdfa;border-radius:12px}
+.map{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 8px}
+.door{border:0;border-radius:18px;padding:14px 10px;color:#fff;text-align:center;box-shadow:0 6px 0 #0002;transition:transform .15s}
+.door:hover{transform:translateY(-3px)}
+.door .ic{font-size:34px;display:block}
+.door b{font-family:Fredoka;font-size:18px;display:block}
+.door small{display:block;font-weight:600;opacity:.95;font-size:13px}
+.door.active{outline:4px solid var(--navy);outline-offset:3px}
+.d1{background:linear-gradient(150deg,#7b3fe4,#a879ff)}
+.d2{background:linear-gradient(150deg,#ff6b4a,#ff9b5e)}
+.d3{background:linear-gradient(150deg,#0b8f8f,#22c3b6)}
+.d4{background:linear-gradient(150deg,#d99400,#f5c542);color:#3b2a00}
+@media(max-width:640px){.map{grid-template-columns:repeat(2,1fr)}.logo{height:72px}}
+
+/* Mission */
+.mhead{border-radius:22px;padding:20px;color:#fff;margin:14px 0}
+.mhead h2{margin:0 0 6px;font-size:clamp(24px,4.5vw,34px)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{background:#ffffff2e;border:2px solid #ffffff80;border-radius:99px;padding:2px 10px;font-size:14px;font-weight:800}
+.ican{background:#ffffff22;border-radius:14px;padding:10px 14px;margin-top:8px}
+.ican ul{margin:4px 0 0;padding-left:22px}
+.card{background:var(--card);border-radius:20px;padding:18px 20px;margin:16px 0;border:3px solid var(--line);position:relative}
+.card h3{margin:0 0 8px;font-size:23px;padding-right:110px}
+.say{position:absolute;top:14px;right:14px;border:0;border-radius:12px;padding:6px 12px;font-weight:800;font-size:15px;background:#fff3c4;color:#5a4300}
+.say:hover{background:#ffe48a}
+.speaking{box-shadow:0 0 0 4px var(--gold),0 0 22px #f5b30188}
+table{border-collapse:collapse;width:100%;font-size:16px;margin:10px 0}
+td,th{padding:9px 10px;text-align:left;vertical-align:top;border:2px solid #eee3d2}
+th{background:#f6f0ff;font-family:Fredoka;font-weight:600}
+.m2 th{background:#fff0ea}.m3 th{background:#e4f7f5}.m4 th{background:#fff6d6}
+.passage{background:#f7fbff;border:2px dashed #9cc3e6;border-radius:14px;padding:14px 16px;margin:12px 0}
+.callout{background:#fff6d6;border-left:6px solid var(--gold);border-radius:10px;padding:10px 14px;margin:12px 0}
+.steps{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.steps span{background:var(--navy);color:#fff;border-radius:99px;padding:4px 14px;font-weight:800}
+.steps i{align-self:center;font-style:normal;font-weight:800}
+.good{color:#137a48;font-weight:800}.bad{color:#b8323a;font-weight:800}
+
+/* Questions */
+.challenge-title{display:flex;align-items:center;gap:10px;margin:28px 0 6px}
+.challenge-title h3{margin:0;font-size:26px}
+.q{background:var(--card);border-radius:20px;padding:18px 20px;margin:14px 0;border:3px solid var(--line);position:relative}
+.q .qnum{font-family:Fredoka;font-weight:700;font-size:14px;color:#fff;background:var(--navy);border-radius:99px;padding:2px 12px;display:inline-block}
+.q .pts{font-weight:800;font-size:14px;color:var(--purple);margin-left:6px}
+.q h4{font-size:20px;margin:10px 0;padding-right:110px}
+.opt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:#fbf9ff;border:3px solid #e3dcf5;border-radius:14px;padding:10px 12px;margin:8px 0;color:var(--ink)}
+.opt .let{flex:none;width:30px;height:30px;border-radius:50%;background:#e3dcf5;display:grid;place-items:center;font-family:Fredoka;font-weight:700}
+.opt.sel{border-color:var(--purple);background:#f1eaff}.opt.sel .let{background:var(--purple);color:#fff}
+.opt.right{border-color:var(--green);background:#e6f8ef}.opt.right .let{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:#fdeaea}.opt.wrong .let{background:var(--red);color:#fff}
+.opt:disabled{cursor:default}
+.lock{background:linear-gradient(90deg,#7b3fe4,#ff6b4a);color:#fff;border:0;border-radius:14px;padding:10px 20px;font-weight:800;font-size:17px;margin-top:6px;box-shadow:0 4px 0 #0002}
+.lock:disabled{opacity:.4;cursor:default}
+.fb{display:none;border-radius:14px;padding:10px 14px;margin-top:10px;font-weight:600}
+.fb.show{display:block}.fb.yes{background:#e6f8ef;border:2px solid #9fe0bf}.fb.no{background:#fff1e6;border:2px solid #ffc9a3}
+.note{font-size:14px;color:#6b6250}
+
+/* Writing */
+.write{background:var(--card);border-radius:20px;padding:18px 20px;margin:16px 0;border:3px solid #c9b6ff;position:relative}
+.write h4{margin:0 0 6px;font-size:20px;padding-right:110px}
+.write textarea{width:100%;min-height:150px;font:inherit;padding:12px;border:3px solid #e3dcf5;border-radius:14px;background:#fffdfa;resize:vertical}
+.wc{font-size:14px;font-weight:800;color:#6b6250}
+.wc.ok{color:var(--green)}
+
+.nextbtn{display:block;margin:24px auto 0;background:var(--navy);color:#fff;border:0;border-radius:16px;padding:14px 26px;font-family:Fredoka;font-size:20px;box-shadow:0 5px 0 #0003}
+.rbtns button{background:var(--navy);color:#fff;border:0;border-radius:12px;padding:10px 16px;font-weight:800;margin:6px 6px 0 0}
+#report{white-space:pre-wrap;background:#fffaf0;border:2px dashed var(--gold);border-radius:14px;padding:14px;margin-top:14px;font-size:15px;overflow-wrap:anywhere}
+#report:empty{display:none}
+.trophy{text-align:center;font-size:20px}
+.trophy .big{font-size:64px;display:block}
+
+footer{text-align:center;font-size:14px;color:#6b6250;padding:20px 16px 40px}
+
+/* Toast + confetti */
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--navy);color:#fff;font-family:Fredoka;font-size:20px;padding:12px 22px;border-radius:16px;box-shadow:0 10px 30px #0004;transition:transform .35s;z-index:50;text-align:center;max-width:92vw}
+#toast.show{transform:translateX(-50%) translateY(0)}
+.conf{position:fixed;top:-20px;width:10px;height:14px;z-index:60;pointer-events:none;border-radius:2px;animation:fall 1.8s ease-in forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.6}}
+@media print{.hud,.map,.start,header,#app>*:not(.m4),.say,.nextbtn,.rbtns,footer{display:none!important}body{background:#fff}.m4>*:not(#reportWrap){display:none!important}#report{border:0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hwrap">
+    <img class="logo" src="logo.png" alt="The Literacy Locksmith logo" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='block'">
+    <div class="logo-fallback" id="logoFallback">🗝️ The Literacy<br>Locksmith<small>Unlocking Skills. Opening Minds. Building Readers.</small></div>
+    <div>
+      <p class="kicker">🌊 FLORIDA STANDARDS SPRINTS • GRADE 6 ELA</p>
+      <h1>ELA Foundations Quest</h1>
+      <p class="tag">Learn the language 🔑 Build your response 🔑 Read for meaning 🔑 Unlock every vault!</p>
+    </div>
+  </div>
+</header>
+
+<div class="hud" aria-label="Your progress">
+  <div class="hudin">
+    <span class="lvl" id="lvl">🧢 Apprentice</span>
+    <div class="xpbar" aria-hidden="true"><span id="xpfill"></span></div>
+    <span class="xpnum" id="xpnum">0 XP</span>
+    <span class="keys" aria-label="Keys earned"><span id="k1" title="Word Key">🗝️</span><span id="k2" title="Writer Key">🗝️</span><span id="k3" title="Reader Key">🗝️</span><span id="k4" title="Master Locksmith">🏆</span></span>
+    <span class="tools">
+      <span class="note" id="savedBadge" style="font-weight:800;color:#1fb36b">💾 Saved on this iPad</span>
+      <button class="tbtn stop" id="stopBtn" title="Stop reading">⏹ Stop</button>
+      <label class="note" for="rate">🐢</label><input class="rate" id="rate" type="range" min="0.7" max="1.2" step="0.05" value="0.95" aria-label="Reading speed"><label class="note" for="rate">🐇</label>
+      <button class="tbtn" id="soundBtn" title="Sound effects">🔔 On</button>
+    </span>
+  </div>
+</div>
+
+<main>
+  <div class="start">
+    <label for="student">👋 Your name:</label>
+    <input id="student" placeholder="First and last name" autocomplete="off">
+  </div>
+  <nav class="map" id="map" aria-label="Choose a vault"></nav>
+  <div id="app"></div>
+</main>
+<footer>The Literacy Locksmith • Created and copyrighted by Donna Rees • Original texts and practice</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ============ CONTENT ============ */
+const MISSIONS=[
+{
+ id:1,cls:'d1',name:'Word Vault',icon:'🔤',color:'linear-gradient(130deg,#5b2bc4,#a879ff)',
+ sub:'Vocabulary',
+ standards:['ELA.6.V.1.1 Academic vocabulary','ELA.6.V.1.2 Greek & Latin roots and affixes'],
+ ican:['explain what common academic directions ask me to do.','use academic words correctly when I speak and write.','use Greek and Latin roots and affixes to predict and check a word’s meaning.'],
+ cards:[
+ {t:'🔑 Words That Tell You What to Do',h:`<p><b>Academic vocabulary</b> words show up in every subject. They tell you what kind of thinking to do. Knowing a definition is a start. <b>Using</b> the word to explain a real idea is the goal.</p>
+ <table><tr><th>Word</th><th>Student-friendly meaning</th><th>What your work should show</th></tr>
+ <tr><td><b>Analyze</b></td><td>Examine the parts and how they connect.</td><td>Explain how a detail helps create meaning.</td></tr>
+ <tr><td><b>Interpret</b></td><td>Explain what something means.</td><td>Explain what words, an image, or a result suggest.</td></tr>
+ <tr><td><b>Evidence</b></td><td>Information that supports an idea.</td><td>Use a specific detail, quotation, or observation.</td></tr>
+ <tr><td><b>Infer</b></td><td>Reach a supported conclusion that is not stated directly.</td><td>Combine clues with reasoning.</td></tr>
+ <tr><td><b>Compare / contrast</b></td><td>Explain how things are alike / different.</td><td>Discuss both subjects using the same point.</td></tr>
+ <tr><td><b>Justify</b></td><td>Give reasons that support a decision.</td><td>Explain why your evidence supports your answer.</td></tr></table>`},
+ {t:'👀 Watch Me: Think Like a Detective',h:`<div class="passage"><p>“Leah held her completed speech behind her back. When her name was called, she asked whether someone else could go first.”</p></div>
+ <p><b>Think-aloud:</b> I <b>infer</b> that Leah may feel nervous. My <b>evidence</b> is that she asks to wait, even though her speech is finished. That evidence supports nervousness more than the idea that she forgot her work. I say “may” because the writer never tells us her feelings directly.</p>
+ <div class="callout"><b>Memory rule: Don’t just name it. Explain it.</b><br><span class="bad">Weak:</span> “There is evidence.”<br><span class="good">Strong:</span> “Leah’s request to wait is evidence that she may feel nervous.”</div>`},
+ {t:'🧩 Word-Part Detective',h:`<p>A <b>root</b> carries a word’s core meaning. A <b>prefix</b> comes before the root. A <b>suffix</b> comes after it. Word parts are clues that help you make a smart prediction.</p>
+ <table><tr><th>Part</th><th>Meaning</th><th>Examples</th></tr>
+ <tr><td>graph (Greek)</td><td>write / record</td><td>autograph, biography</td></tr>
+ <tr><td>bio (Greek)</td><td>life</td><td>biography, biology</td></tr>
+ <tr><td>auto (Greek)</td><td>self</td><td>autobiography</td></tr>
+ <tr><td>spect (Latin)</td><td>look / see</td><td>inspect, spectator</td></tr>
+ <tr><td>port (Latin)</td><td>carry</td><td>transport, portable</td></tr>
+ <tr><td>re- (prefix)</td><td>again / back</td><td>reread, rebuild</td></tr>
+ <tr><td>pre- (prefix)</td><td>before</td><td>preview, pretest</td></tr>
+ <tr><td>-able (suffix)</td><td>able to be</td><td>portable, readable</td></tr>
+ <tr><td>-er / -or (suffix)</td><td>a person who does something</td><td>reader, spectator</td></tr></table>
+ <div class="steps"><span>Break</span><i>→</i><span>Predict</span><i>→</i><span>Check</span></div>
+ <div class="passage"><b>Worked example: portable</b><br>“The team used a portable display that could be carried between classrooms.”<br>port = carry; -able = able to be. Prediction: able to be carried. Sentence check: carrying the display between rooms supports that meaning. ✅</div>
+ <p><b>Don’t force a false match!</b> Not every word that starts with r-e has the prefix re-. “Real” does not mean “again + al.” Always check the sentence, and use a dictionary if you need to.</p>`}
+ ],
+ qs:[
+ {q:'What does “analyze how the ending affects the reader’s understanding” ask you to do?',o:['Copy the last sentence only.','Explain the relationship between the ending and the meaning of the text.','List the characters without explaining them.','Tell whether you liked the story.'],a:[1],w:'Analyzing means examining a part (the ending) and explaining how it connects to the whole meaning.'},
+ {q:'Which response uses evidence most effectively?',o:['Leah is nervous because I said so.','Leah is definitely never prepared.','Leah may be nervous because she asks another person to speak first even though her speech is ready.','Evidence is a word with eight letters.'],a:[2],w:'It names a relevant detail and explains the inference without overclaiming.'},
+ {q:'Which meaning best fits “The students reread the confusing paragraph”?',o:['Read it before it is written.','Read it again.','Carry the paragraph.','Look away from it.'],a:[1],w:'The prefix re- means again. The context (a confusing paragraph) supports reading it another time.'},
+ {q:'A spectator watches a performance. Which root helps explain the meaning?',o:['port: carry','bio: life','spect: look or see','graph: write'],a:[2],w:'The Latin root spect means look or see. A spectator is a person (-or) who watches.'},
+ {q:'“My grandfather signed the back of his class photograph. His autograph made the photo feel personal.” What is an autograph, based on its parts AND the context?',o:['A person’s own signature.','A book written by a stranger.','A photograph with no writing.','A box that carries pictures.'],a:[0],w:'auto = self and graph = write. The context (he signed the photo) makes it precise: a person’s own signature.'}
+ ],
+ write:{id:'w1',t:'✏️ Word Vault Exit Ticket',p:'Explain the difference between “analyze” and “justify.” Then explain how the root port helps you understand the word portable.'}
+},
+{
+ id:2,cls:'d2',name:'Writer’s Vault',icon:'✍️',color:'linear-gradient(130deg,#e24a2a,#ff9b5e)',
+ sub:'Writing & Discussion',
+ standards:['ELA.6.R.3.2 Paraphrase','ELA.6.C.1 Writing with purpose (intro)','ELA.K12.EE.4.1 Collaborative discussion'],
+ ican:['choose a purpose, an audience, and useful details for my writing.','paraphrase accurately: new words, same meaning.','discuss ideas by listening, using evidence, and building on others’ thinking.'],
+ cards:[
+ {t:'🎯 Writing Begins With a Decision',h:`<p>Before you draft, ask: <b>Why am I writing? Who will read this? What does that reader need?</b></p>
+ <table><tr><th>Purpose</th><th>What readers need</th><th>Example plan</th></tr>
+ <tr><td>Narrate an experience</td><td>A sequence, meaningful details, and reflection.</td><td>Tell how I learned to ask for help during a group project.</td></tr>
+ <tr><td>Explain a topic</td><td>Accurate information and clear connections.</td><td>Explain how a book exchange works.</td></tr>
+ <tr><td>Support a position</td><td>A claim, reasons, and evidence.</td><td>Argue that the school should keep the book exchange.</td></tr></table>
+ <div class="passage"><p><span class="bad">Too vague:</span> “The exchange is good. It has stuff. People like it.”</p>
+ <p><span class="good">Clearer:</span> “The book exchange gives students a way to find a different book without buying one. A student brings a book in good condition and chooses a donated book. This process keeps usable books moving among readers.”</p>
+ <p><b>Why it works:</b> The first sentence names the point. The middle explains the process. The ending explains why it matters.</p></div>
+ <div class="steps"><span>Plan</span><i>→</i><span>Draft</span><i>→</i><span>Reread</span><i>→</i><span>Revise</span></div>
+ <p><b>Revising</b> improves ideas and organization. <b>Editing</b> fixes grammar, spelling, and punctuation. Both matter, but they solve different problems.</p>`},
+ {t:'🔁 Paraphrase: New Words, Same Meaning',h:`<p>To <b>paraphrase</b>, restate a specific passage in your own words and sentence structure while keeping its meaning. A <b>summary</b> shrinks a whole text down to its key ideas. A <b>quotation</b> uses the author’s exact words in quotation marks.</p>
+ <ol><li>Read for meaning.</li><li>Look away and restate the idea.</li><li>Compare with the source. Keep important limits, numbers, and relationships.</li><li>Credit the source the way your teacher directs.</li></ol>
+ <div class="passage"><p><b>Original:</b> “Students may exchange one gently used book for another during lunch on Friday.”</p>
+ <p><span class="good">Faithful paraphrase:</span> “On Friday at lunchtime, a student can bring one book in good condition and trade it for a different one.”</p>
+ <p><span class="bad">Unfaithful version:</span> “Students must bring three new books every day.” This changes <i>may</i> to <i>must</i>, one to three, used to new, and Friday to every day.</p></div>`},
+ {t:'💬 Discussion Moves',h:`<table><tr><th>Role</th><th>Useful contribution</th></tr>
+ <tr><td>Speaker</td><td>State an idea and point to text evidence.</td></tr>
+ <tr><td>Listener</td><td>Let the speaker finish; restate their idea accurately.</td></tr>
+ <tr><td>Questioner</td><td>Ask “Which detail supports that?” or “How does that connect?”</td></tr>
+ <tr><td>Connector</td><td>Build on the idea, or respectfully challenge it with evidence.</td></tr></table>
+ <div class="callout"><b>Model:</b> “I hear you saying the book exchange is only about free books. I agree that’s part of it. However, the lesson also shows that sharing a book gives another reader a chance to enjoy its story.”</div>
+ <div class="steps"><span>Listen</span><i>→</i><span>Restate</span><i>→</i><span>Respond with evidence</span></div>`}
+ ],
+ qs:[
+ {q:'Which detail is most relevant when explaining HOW a book exchange works?',o:['The writer’s favorite sandwich.','The color of every hallway wall.','Students bring a book and select another donated book.','A claim that every reader likes the same genre.'],a:[2],w:'The process detail answers the explanatory purpose: how it works.'},
+ {q:'Which revision makes “The exchange is good” more precise?',o:['The exchange is really, really good.','The exchange helps usable books reach new readers.','Good is the exchange.','Stuff happens there.'],a:[1],w:'It names a specific benefit instead of adding vague praise.'},
+ {q:'Which paraphrase keeps the meaning of “The volunteers sometimes opened the room before school”?',o:['The room was always open all night.','On some occasions, volunteers opened the room before classes began.','Students were required to open it after school every day.','No one opened the room.'],a:[1],w:'“Sometimes” becomes “on some occasions,” and the people and timing stay accurate.'},
+ {q:'What is the main difference between paraphrasing a passage and summarizing a whole article?',o:['A paraphrase restates specific content; a summary condenses the larger text’s key ideas.','A summary must include every sentence exactly.','A paraphrase never uses the original meaning.','Only fiction can be summarized.'],a:[0],w:'The difference is scope: a paraphrase restates one part, while a summary shrinks the whole. Accuracy matters in both.'},
+ {q:'Which response follows effective discussion expectations?',o:['Interrupt and say, “Wrong.”','Ignore the text and change the topic.','Restate a partner’s idea, then support a different interpretation with a detail.','Agree with everything without listening.'],a:[2],w:'Listening, restating accurately, and using evidence make a respectful disagreement productive.'}
+ ],
+ write:{id:'w2',t:'✏️ Paraphrase Challenge',p:'Paraphrase: “The exchange offered books at no cost, but students could choose only one title each week.” Keep the limit AND the cost information. Credit it as “Book Exchange lesson.”'}
+},
+{
+ id:3,cls:'d3',name:'Reading Vault',icon:'📖',color:'linear-gradient(130deg,#087878,#22c3b6)',
+ sub:'Informational Reading',
+ standards:['ELA.6.R.2.1 Text structure & features','ELA.K12.EE.2.1 Read and comprehend complex text'],
+ ican:['preview an informational text and set a reading goal.','explain how a section adds to the whole text.','explain how titles, headings, captions, and tables add meaning.','reread and use evidence to understand a challenging text.'],
+ cards:[
+ {t:'🔭 Preview With a Purpose',h:`<p>Informational texts help readers understand topics, events, and ideas. A text feature helps you find and understand information, but you must explain what it adds to <b>this</b> text.</p>
+ <table><tr><th>Feature</th><th>What to ask</th></tr>
+ <tr><td>Title</td><td>Which topic or idea does it emphasize?</td></tr>
+ <tr><td>Heading</td><td>What is this section’s focus, and how does it fit the whole?</td></tr>
+ <tr><td>Caption</td><td>What important detail does it clarify about the visual?</td></tr>
+ <tr><td>Table</td><td>What information is organized, and what comparison can I make?</td></tr>
+ <tr><td>Opening / ending</td><td>What idea is introduced or brought together?</td></tr></table>
+ <div class="steps"><span>Preview</span><i>→</i><span>Question</span><i>→</i><span>Read</span><i>→</i><span>Check</span></div>
+ <p><b>Think-aloud:</b> The title is “More Than a Shelf,” and the headings are “An Access Problem,” “A Shared System,” “Learning from the Record,” and “What Comes Next.” I predict the article explains a book-sharing system and checks how well it works. I will change my prediction if the text leads somewhere else.</p>`},
+ {t:'📰 Read: More Than a Shelf',h:`<div class="passage"><p class="note">Original informational article</p>
+ <h4>An Access Problem</h4>
+ <p><b>[1]</b> A fictional school reading club wanted students to find books that matched their interests. Some students had finished the books at home but could not regularly visit a public library. Others owned books they no longer planned to read. The club proposed an exchange so usable books could move from one reader to another.</p>
+ <h4>A Shared System</h4>
+ <p><b>[2]</b> Volunteers placed a small cabinet outside the school library. Students could donate books in good condition and choose one donated title each week, even if they had not donated a book themselves. The club separated picture books, novels, and informational books into labeled sections. Labels helped students locate a type of book without examining every cover.</p>
+ <p><b>[3]</b> The cabinet alone was not the whole system. Two volunteers checked the condition of donations and recorded how many different students selected books each week. They also noted questions readers asked. When several students asked for mysteries, the club requested more mystery donations instead of simply filling every shelf with whatever arrived.</p>
+ <figure style="margin:12px 0"><svg viewBox="0 0 440 180" role="img" aria-label="Book cabinet with labeled picture books, novels, and informational books shelves" style="width:100%;max-width:440px"><rect x="10" y="10" width="420" height="160" rx="12" fill="#e4f7f5" stroke="#0fa3a3" stroke-width="4"/><path d="M10 64H430M10 118H430" stroke="#0fa3a3" stroke-width="4"/><rect x="300" y="22" width="16" height="36" fill="#7b3fe4"/><rect x="320" y="26" width="16" height="32" fill="#ff6b4a"/><rect x="340" y="20" width="16" height="38" fill="#f5b301"/><rect x="300" y="76" width="16" height="36" fill="#1fb36b"/><rect x="320" y="80" width="16" height="32" fill="#7b3fe4"/><rect x="300" y="130" width="16" height="36" fill="#ff6b4a"/><rect x="320" y="134" width="16" height="32" fill="#0fa3a3"/><rect x="340" y="128" width="16" height="38" fill="#f5b301"/><text x="28" y="46" font-size="20" fill="#1d2b64" font-family="Nunito">Picture books</text><text x="28" y="100" font-size="20" fill="#1d2b64" font-family="Nunito">Novels</text><text x="28" y="154" font-size="20" fill="#1d2b64" font-family="Nunito">Informational books</text></svg>
+ <figcaption><b>Caption:</b> Labels organize books by type so readers can begin their search in a relevant section.</figcaption></figure>
+ <h4>Learning from the Record</h4>
+ <p><b>[4]</b> The club recorded participation during three weeks. The number of different students selecting books increased each week. However, the record did not track whether those students finished their books or enjoyed them. More participation suggested growing use of the exchange; it did not prove that every student had become a stronger reader.</p>
+ <table style="max-width:420px"><caption style="text-align:left;font-weight:800">Different students selecting a book in each week</caption><tr><th>Week</th><th>Students</th></tr><tr><td>1</td><td>18</td></tr><tr><td>2</td><td>24</td></tr><tr><td>3</td><td>31</td></tr></table>
+ <p class="note">Note: A student may appear in more than one week. These counts do not represent 73 unique students across all three weeks.</p>
+ <h4>What Comes Next</h4>
+ <p><b>[5]</b> The club decided to ask readers what they liked and which books they hoped to find. It also planned to keep checking donations and arranging shelves. A cabinet could provide a place for books, but a responsive exchange required people to maintain it and learn from its users.</p></div>`},
+ {t:'🧠 Feature → Meaning → Contribution',h:`<p>Each section has a job. The opening describes a problem: some readers need books while others have unused ones. “A Shared System” explains the response. “Learning from the Record” checks what the club knows and what it still doesn’t know. The ending turns those limits into next steps.</p>
+ <div class="callout"><span class="good">Strong:</span> “The record section shows that use increased, but it warns that participation alone does not measure finished reading. This helps readers understand why the club plans to ask follow-up questions.”<br><span class="bad">Weak:</span> “The section is about records.” (It names a topic but doesn’t explain the section’s job.)</div>
+ <div class="steps"><span>Feature</span><i>→</i><span>Meaning</span><i>→</i><span>Contribution</span></div>
+ <p>Example: the cabinet labels separate book types → readers can find a relevant type → the article shows how organization supports access.</p>`}
+ ],
+ qs:[
+ {q:'What is the main contribution of the section “An Access Problem”?',o:['It establishes the need that motivates the exchange.','It proves that all students hate reading.','It explains how to build a cabinet from wood.','It repeats every table value.'],a:[0],w:'The opening explains why limited access and unused books create a reason for the exchange.'},
+ {q:'How does the caption contribute to the article?',o:['It lists every student’s name.','It tells readers that labels prove reading improvement.','It explains how organizing by book type helps readers find a starting point.','It says every book belongs in the same category.'],a:[2],w:'The caption interprets the labels and connects organization to access.'},
+ {q:'What conclusion is directly supported by the table?',o:['Exactly 73 different students participated overall.','Every student finished a selected book.','The weekly number of students selecting books increased from 18 to 31.','Reading scores increased by 13 points.'],a:[2],w:'The table shows weekly participation rising. It does not count unique students across weeks, finished books, or test scores.'},
+ {q:'Which TWO details support the idea that the exchange adapts to readers’ needs?',o:['The club requests mysteries after readers ask for them.','The club plans to ask readers which books they hope to find.','The cabinet is small.','The first weekly count is 18.'],a:[0,1],w:'Both details show the club responding to readers, not just providing a shelf.'},
+ {q:'Which sentence best expresses the article’s overall point?',o:['A cabinet alone guarantees reading success.','An effective book exchange combines access, organization, maintenance, and attention to readers’ needs.','Tables are always more important than paragraphs.','Every donated book is a mystery.'],a:[1],w:'The article builds a whole system: books, organization, volunteers, records, and responsive next steps.'}
+ ],
+ write:{id:'w3',t:'✏️ Table Detective',p:'Explain how the table helps readers understand the exchange. State ONE conclusion the table supports and ONE conclusion it cannot support. Use numbers and the note below the table.'}
+}
+];
+const FINAL={id:4,cls:'d4',name:'Master Vault',icon:'🏆',sub:'Connect & Report'};
+
+/* ============ STATE ============ */
+const KEY='elaFoundationsQuest_v1';
+let S={name:'',m:1,sel:{},locked:{},correct:{},w:{},sound:true,rate:0.95,keys:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s)S=Object.assign(S,s)}catch(e){}
+/* Autosave on this iPad: saves every tap/keystroke, when the app is switched or closed, and asks the browser to keep the data */
+let okStore=true;try{localStorage.setItem('__t','1');localStorage.removeItem('__t')}catch(e){okStore=false}
+function markSaved(){const b=document.getElementById('savedBadge');if(b)b.textContent=okStore?'💾 Saved on this iPad '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}):'⚠️ Not saving: turn off Private/Incognito mode'}
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){okStore=false}markSaved()}
+window.addEventListener('pagehide',save);document.addEventListener('visibilitychange',()=>{if(document.hidden)save()});
+
+const qid=(m,i)=>'m'+m+'q'+(i+1);
+const words=t=>(t||'').trim().split(/\s+/).filter(Boolean).length;
+const MINW=15;
+const ALLW=['w1','w2','w3','w4'];
+function xp(){let x=0;MISSIONS.forEach(M=>M.qs.forEach((q,i)=>{if(S.correct[qid(M.id,i)])x+=q.a.length>1?20:10}));ALLW.forEach(id=>{if(words(S.w[id])>=MINW)x+=10});return x}
+const MAXXP=MISSIONS.reduce((s,M)=>s+M.qs.reduce((a,q)=>a+(q.a.length>1?20:10),0),0)+ALLW.length*10;
+function level(x){const p=x/MAXXP;return p>=.85?'👑 Master Locksmith':p>=.6?'🔓 Lock Picker':p>=.3?'🗝️ Key Finder':'🧢 Apprentice'}
+function missionDone(M){return M.qs.every((q,i)=>S.locked[qid(M.id,i)])&&words(S.w[M.write.id])>=MINW}
+function allDone(){return MISSIONS.every(missionDone)&&words(S.w.w4)>=MINW}
+
+/* ============ SOUND + FX ============ */
+let ac;function tone(fs){if(!S.sound)return;try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();let t=ac.currentTime;fs.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,t+i*.12);g.gain.exponentialRampToValueAtTime(.18,t+i*.12+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.12+.22);o.connect(g).connect(ac.destination);o.start(t+i*.12);o.stop(t+i*.12+.25)})}catch(e){}}
+function confetti(n=50){const cs=['#7b3fe4','#ff6b4a','#0fa3a3','#f5b301','#1fb36b','#ff4fa3'];for(let i=0;i<n;i++){const d=document.createElement('div');d.className='conf';d.style.left=Math.random()*100+'vw';d.style.background=cs[i%cs.length];d.style.animationDelay=Math.random()*.4+'s';d.style.animationDuration=1.4+Math.random()*1.2+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),3000)}}
+let tt;function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2600)}
+
+/* ============ READ ALOUD (Google US English) ============ */
+let voice=null;
+function pickVoice(){if(!('speechSynthesis' in window))return;const vs=speechSynthesis.getVoices();voice=vs.find(v=>v.name==='Google US English')||vs.find(v=>v.lang==='en-US'&&/Samantha|Aria|Jenny|Zira|Ava|Allison|female/i.test(v.name))||vs.find(v=>v.lang==='en-US')||null}
+if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice}
+function cleanSpeech(t){return t
+ .replace(/\b(?:ELA\.)?(?:K12|\d)\.[A-Z]{1,2}\.\d+(?:\.\d+)?\b/g,' ')
+ .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}\u{200D}]/gu,' ')
+ .replace(/→/g,', then, ').replace(/\s*\/\s*/g,' or ').replace(/\[(\d)\]/g,'Paragraph $1. ')
+ .replace(/\s+([.,])/g,'$1').replace(/(\.\s*){2,}/g,'. ').replace(/\s{2,}/g,' ').trim()}
+function textOf(el){const c=el.cloneNode(true);c.querySelectorAll('.noread,button.say,textarea,svg,.lock,.fb:not(.show)').forEach(x=>x.remove());c.querySelectorAll('td,th,li,p,h3,h4,figcaption,caption,.steps span,.passage').forEach(x=>x.append('. '));return c.textContent}
+let speakingEl=null;
+function stopSpeak(){if('speechSynthesis' in window)speechSynthesis.cancel();if(speakingEl)speakingEl.classList.remove('speaking');speakingEl=null}
+function speak(text,el){if(!('speechSynthesis' in window)){toast('Read-aloud is not available on this device.');return}
+ const same=speakingEl===el;stopSpeak();if(same)return;
+ const clean=cleanSpeech(text);const parts=clean.match(/[^.!?]+[.!?]*/g)||[clean];const chunks=[];let cur='';parts.forEach(p=>{if((cur+p).length>220&&cur){chunks.push(cur);cur=p}else cur+=p});if(cur.trim())chunks.push(cur);
+ speakingEl=el;if(el)el.classList.add('speaking');
+ chunks.forEach((c,i)=>{const u=new SpeechSynthesisUtterance(c.trim());if(voice)u.voice=voice;u.lang='en-US';u.rate=+S.rate;if(i===chunks.length-1)u.onend=()=>{if(speakingEl===el){el&&el.classList.remove('speaking');speakingEl=null}};speechSynthesis.speak(u)})}
+
+/* ============ RENDER ============ */
+const $=s=>document.querySelector(s);
+function renderMap(){const all=[...MISSIONS,FINAL];$('#map').innerHTML=all.map(M=>{const done=M.id<4?missionDone(M):allDone();return `<button class="door ${M.cls} ${S.m===M.id?'active':''}" data-m="${M.id}"><span class="ic">${done?'🔓':M.icon}</span><b>${M.name}</b><small>${M.sub}${done?' • ✅':''}</small></button>`}).join('')}
+function hud(){const x=xp();$('#xpfill').style.width=Math.min(100,x/MAXXP*100)+'%';$('#xpnum').textContent=x+' / '+MAXXP+' XP';$('#lvl').textContent=level(x);MISSIONS.forEach(M=>$('#k'+M.id).classList.toggle('on',missionDone(M)));$('#k4').classList.toggle('on',allDone());$('#soundBtn').textContent=S.sound?'🔔 On':'🔕 Off'}
+function checkKeys(){MISSIONS.forEach(M=>{if(missionDone(M)&&!S.keys[M.id]){S.keys[M.id]=1;save();tone([523,659,784,1047]);confetti(70);toast('🗝️ You earned the '+M.name+' key!');renderMap()}});if(allDone()&&!S.keys[4]){S.keys[4]=1;save();tone([523,659,784,1047,1319]);confetti(120);toast('🏆 Master Locksmith! Every vault unlocked!');renderMap()}hud()}
+
+function qHTML(M,q,i){const id=qid(M.id,i),multi=q.a.length>1,sel=S.sel[id]||[],lk=S.locked[id];
+ const opts=q.o.map((o,j)=>{let c='opt';if(sel.includes(j))c+=' sel';if(lk){if(q.a.includes(j))c+=' right';else if(sel.includes(j))c+=' wrong'}return `<button class="${c}" data-q="${id}" data-j="${j}" ${lk?'disabled':''}><span class="let">${'ABCD'[j]}</span><span>${o}</span></button>`}).join('');
+ const fb=lk?`<div class="fb show ${S.correct[id]?'yes':'no'}">${S.correct[id]?'🎉 Correct! +'+(multi?20:10)+' XP. ':'💡 Not this time. Correct answer: '+q.a.map(k=>'ABCD'[k]).join(' and ')+'. '}${q.w}</div>`:'<div class="fb"></div>';
+ return `<div class="q" id="box-${id}"><span class="qnum noread">Challenge ${i+1}</span><span class="pts noread">${multi?'Select TWO • 20 XP':'Select one • 10 XP'}</span><button class="say" data-say="q" title="Read aloud">🔊 Read</button><h4>${q.q}</h4>${opts}<button class="lock" data-lock="${id}" ${lk||sel.length!==q.a.length?'disabled':''}>${lk?'🔒 Locked in':'🔒 Lock it in'}</button><p class="note noread">${lk?'':'You get one try, so think before you lock it in!'}</p>${fb}</div>`}
+
+function writeHTML(w){const n=words(S.w[w.id]);return `<div class="write"><button class="say" title="Read aloud">🔊 Read</button><h4>${w.t}</h4><p>${w.p}</p><textarea data-w="${w.id}" placeholder="Type or write with your Apple Pencil here. Use details from the lesson.">${(S.w[w.id]||'').replace(/</g,'&lt;')}</textarea><span class="wc noread ${n>=MINW?'ok':''}" id="wc-${w.id}">${n} words ${n>=MINW?'✅ +10 XP':'(write at least '+MINW+' words for +10 XP)'}</span></div>`}
+
+function render(){stopSpeak();renderMap();hud();const app=$('#app');
+ if(S.m===4){app.innerHTML=finalHTML();return}
+ const M=MISSIONS[S.m-1];
+ app.innerHTML=`<section class="m${M.id}">
+ <div class="mhead" style="background:${M.color}"><h2>${M.icon} Vault ${M.id}: ${M.name}</h2><div class="chips noread">${M.standards.map(s=>'<span class="chip">'+s+'</span>').join('')}</div>
+ <div class="ican"><b>I can…</b><ul>${M.ican.map(x=>'<li>'+x+'</li>').join('')}</ul></div></div>
+ <p class="fred" style="font-size:22px;margin:6px 0">📚 Learn it <span class="note">Tap 🔊 to hear any card.</span></p>
+ ${M.cards.map(c=>`<div class="card"><button class="say" title="Read aloud">🔊 Read</button><h3>${c.t}</h3>${c.h}</div>`).join('')}
+ <div class="challenge-title"><span style="font-size:32px">⚡</span><h3>Vault Challenges</h3></div>
+ ${M.qs.map((q,i)=>qHTML(M,q,i)).join('')}
+ ${writeHTML(M.write)}
+ <button class="nextbtn" data-m="${M.id+1}">${M.id<3?'Next vault: '+MISSIONS[M.id].name+' →':'Go to the Master Vault 🏆 →'}</button></section>`}
+
+function finalHTML(){const x=xp();return `<section class="m4">
+ <div class="mhead" style="background:linear-gradient(130deg,#c98500,#f5c542);color:#3b2a00"><h2>🏆 Master Vault: Connect It All</h2><div class="ican" style="background:#ffffff55"><b>You unlock this vault</b> by connecting today’s skills and saving your report for Mrs. Rees.</div></div>
+ <div class="card"><button class="say" title="Read aloud">🔊 Read</button><h3>🧰 Your Reading Toolkit</h3>
+ <table><tr><th>🔤 Word Vault</th><th>✍️ Writer’s Vault</th><th>📖 Reading Vault</th></tr><tr><td>Decode task words and word parts.<br><b>Break → Predict → Check</b></td><td>Write with purpose, paraphrase faithfully, and discuss respectfully.<br><b>Listen → Restate → Respond</b></td><td>Connect sections and features to meaning; check the evidence.<br><b>Feature → Meaning → Contribution</b></td></tr></table>
+ <p>These skills work together. You can analyze a table, justify an interpretation, paraphrase a paragraph, and discuss it respectfully, all in one reading task.</p></div>
+ ${writeHTML({id:'w4',t:'✏️ Final Exit Ticket',p:'Explain one way today’s three vaults connect. Then name the strategy you will use first when a new reading assignment feels confusing.'})}
+ <div class="card trophy"><span class="big">${allDone()?'🏆':'🔐'}</span><b class="fred" style="font-size:24px">${level(x)}</b><br>${x} of ${MAXXP} XP • Keys: ${MISSIONS.filter(missionDone).length}/3<br><span class="note">${allDone()?'Every vault is unlocked. Amazing work!':'Finish every challenge and writing box to unlock all the keys.'}</span></div>
+ <div class="card" id="reportWrap"><h3>📄 Save My Report</h3><p class="noread">Make your report, then download or print it and turn it in on Canvas as Mrs. Rees directs.</p>
+ <div class="rbtns"><button id="repBtn">📋 Show my report</button><button id="dlBtn">⬇️ Download (.txt)</button><button id="prBtn">🖨️ Print / save PDF</button></div><div id="report" aria-live="polite"></div></div>
+ <p class="note">These standards are introduced through selected foundational skills; this quest does not cover every benchmark in ELA.6.C.1, ELA.6.R.3, or ELA.6.R.2. <a href="https://www.fldoe.org/core/fileparse.php/20070/urlt/12-3.pdf" target="_blank" rel="noopener">Florida B.E.S.T. ELA reference</a></p></section>`}
+
+function report(){const x=xp();let t='ELA FOUNDATIONS QUEST • ONE-DAY REPORT\nStudent: '+(S.name.trim()||'[Name missing]')+'\nDate: '+new Date().toLocaleString()+'\nXP: '+x+' / '+MAXXP+'  •  Level: '+level(x).replace(/^\S+\s/,'')+'\nStatus: '+(allDone()&&S.name.trim()?'All vaults complete':'Incomplete: review missing work')+'\n';
+ MISSIONS.forEach(M=>{const c=M.qs.filter((q,i)=>S.correct[qid(M.id,i)]).length,d=M.qs.filter((q,i)=>S.locked[qid(M.id,i)]).length;t+='\n== VAULT '+M.id+': '+M.name.toUpperCase()+' ('+M.standards.map(s=>s.split(' ')[0]).join(', ')+') ==\nCorrect on first try: '+c+'/'+M.qs.length+' (answered '+d+'/'+M.qs.length+')\n';M.qs.forEach((q,i)=>{const id=qid(M.id,i);t+='  Challenge '+(i+1)+': '+(!S.locked[id]?'Not answered':S.correct[id]?'Correct':'Needs review')+'\n'});t+='\n'+M.write.t.replace(/^\S+\s/,'')+':\n'+(S.w[M.write.id]||'[Missing]')+'\n'});
+ t+='\n== MASTER VAULT ==\nFinal Exit Ticket:\n'+(S.w.w4||'[Missing]')+'\n';$('#report').textContent=t;return t}
+
+/* ============ EVENTS ============ */
+$('#student').value=S.name;
+$('#student').addEventListener('input',e=>{S.name=e.target.value;save()});
+$('#rate').value=S.rate;$('#rate').addEventListener('input',e=>{S.rate=e.target.value;save()});
+$('#stopBtn').onclick=stopSpeak;
+$('#soundBtn').onclick=()=>{S.sound=!S.sound;save();hud()};
+document.addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;
+ if(b.dataset.m){S.m=+b.dataset.m;save();render();window.scrollTo({top:document.querySelector('#map').offsetTop-70,behavior:'smooth'});return}
+ if(b.classList.contains('say')){const box=b.closest('.card,.q,.write');speak(textOf(box),box);return}
+ if(b.dataset.q){const id=b.dataset.q;if(S.locked[id])return;const [m,i]=id.slice(1).split('q').map(Number),q=MISSIONS[m-1].qs[i-1],j=+b.dataset.j;let s=S.sel[id]||[];
+  if(q.a.length>1){s=s.includes(j)?s.filter(v=>v!==j):(s.length<q.a.length?[...s,j]:s)}else s=[j];
+  S.sel[id]=s;save();const box=$('#box-'+id);box.outerHTML=qHTML(MISSIONS[m-1],q,i-1);return}
+ if(b.dataset.lock){const id=b.dataset.lock;const [m,i]=id.slice(1).split('q').map(Number),M=MISSIONS[m-1],q=M.qs[i-1],s=S.sel[id]||[];if(s.length!==q.a.length)return;
+  S.locked[id]=true;S.correct[id]=q.a.every(v=>s.includes(v));save();
+  if(S.correct[id]){tone([660,880]);confetti(30);toast('🎉 +'+(q.a.length>1?20:10)+' XP!')}else{tone([300,220]);toast('💡 Read the explanation. You’ve got this!')}
+  $('#box-'+id).outerHTML=qHTML(M,q,i-1);checkKeys();return}
+ if(b.id==='repBtn'){report();return}
+ if(b.id==='dlBtn'){const t=report(),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain'}));a.download='ELA-Foundations-Quest-'+(S.name.trim().replace(/\s+/g,'-')||'Report')+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);return}
+ if(b.id==='prBtn'){report();window.print();return}
+});
+let wt;document.addEventListener('input',e=>{const ta=e.target.closest('textarea[data-w]');if(!ta)return;const id=ta.dataset.w;S.w[id]=ta.value;save();const n=words(ta.value),wc=$('#wc-'+id);wc.textContent=n+' words '+(n>=MINW?'✅ +10 XP':'(write at least '+MINW+' words for +10 XP)');wc.classList.toggle('ok',n>=MINW);clearTimeout(wt);wt=setTimeout(()=>{if(S.m===4&&!document.querySelector('#report:empty')){}hud();checkKeys();renderMap()},500)});
+render();
+</script>
+</body>
+</html>
